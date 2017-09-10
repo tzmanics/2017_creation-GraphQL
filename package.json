@@ -1,0 +1,36 @@
+{
+  "name": "2017_creations-koa",
+  "version": "0.0.0",
+  "description": "An API for tzmanics creations using Koa",
+  "main": "index.js",
+  "dependencies": {
+    "knex": "^0.13.0",
+    "koa": "^2.3.0",
+    "koa-router": "^7.2.1",
+    "pg": "^7.3.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.5.0"
+  },
+  "scripts": {
+    "start": "node ./src/server/index.js",
+    "test": "./node_modules/mocha/bin/_mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tzmanics/2017_creations-Koa.git"
+  },
+  "keywords": [
+    "koa",
+    "api",
+    "tzmanics"
+  ],
+  "author": "Tara Z. Manicsic <tzmanics@gmail.com> (https://tzmanics.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tzmanics/2017_creations-Koa/issues"
+  },
+  "homepage": "https://github.com/tzmanics/2017_creations-Koa#readme"
+}
