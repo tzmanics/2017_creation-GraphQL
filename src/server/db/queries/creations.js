@@ -17,8 +17,16 @@ function addCreation(creation) {
   .returning('*');
 }
 
+function updateCreation(id, creation) {
+  return knex('creations')
+  .update(creation)
+  .where({ id: parseInt(id) })
+  .returning('*');
+}
+
 module.exports = {
   getAllCreations,
   getSingleCreation,
-  addCreation
+  addCreation,
+  updateCreation
 };
