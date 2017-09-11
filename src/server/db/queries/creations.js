@@ -5,6 +5,13 @@ function getAllCreations() {
   .select('*');
 }
 
+function getSingleCreation(id) {
+  return knex('creations')
+  .select('*')
+  .where({ id: parseInt(id) });
+}
+
 module.exports = {
-  getAllCreations
+  getAllCreations,
+  getSingleCreation
 };

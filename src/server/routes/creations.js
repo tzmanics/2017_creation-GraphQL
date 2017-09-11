@@ -16,4 +16,24 @@ router.get(BASE_URL, async (ctx) => {
   }
 })
 
+router.get(`${BASE_URL}/:id`, async (ctx) => {
+  try {
+    const creation = await queries.getSingleCreation(ctx.params.id);
+    if (creation.length) {
+      ctx.body = {
+        status: 'success',
+        data: creation
+      };
+    } else {
+      ctx.status = 404;
+      ctx.body = {
+        status: 'error',
+        message: 'That creation does not exist.'
+      };
+    }
+  } catch (err) {
+    console.log(err);
+  }
+})
+
 module.exports = router;

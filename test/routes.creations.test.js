@@ -37,4 +37,35 @@ describe('routes : creations', () => {
       });
     });
   });
+ 
+  describe('GET /api/v1/creations/:id', () => {
+    it('should return a single creation', (done) => {
+      chai.request(server)
+      .get('/api/v1/creations/1')
+      .end((err, res) => {
+        should.not.exist(err);
+        res.status.should.equal(200);
+        res.type.should.equal('application/json');
+        res.body.status.should.eql('success');
+        res.body.data.length.should.eql(1);
+        res.body.data[0].should.include.keys(
+          'id', 'title', 'description', 'materials', 'category', 'image'
+        );
+        done();
+      });
+    });
+
+    it('should throw an error if the creation does not exist', (done) => {
+      chai.request(server)
+      .get('/api/v1/creations/2222222')
+      .end((err, res) => {
+        should.exist(err);
+        res.status.should.equal(404);
+        res.type.should.equal('application/json');
+        res.body.status.should.eql('error');
+        res.body.message.should.eql('That creation does not exist.');
+        done();
+      });
+    });
+  });
 });
