@@ -68,4 +68,44 @@ describe('routes : creations', () => {
       });
     });
   });
+
+  describe('POST /api/v1/creations', () => {
+    it('should return the creation that was added', (done) => {
+      chai.request(server)
+      .post('/api/v1/creations')
+      .send({
+        title: 'Test Title',
+        description: 'Test description here.',
+        materials: 'test, materials',
+        category: 'test',
+        image: 'http://bit.ly/2wRVdqy'
+      })
+      .end((err, res) => {
+        should.not.exist(err);
+        res.status.should.equal(201);
+        res.type.should.equal('application/json');
+        res.body.status.should.eql('success');
+        res.body.data[0].should.include.keys(
+          'id', 'title', 'description', 'materials', 'category', 'image'
+        );
+        done();
+      });
+    });
+
+    it('should throw an error if the payload is malformed', (done) => {
+      chai.request(server)
+      .post('/api/v1/creations')
+      .send({
+        title: 'Test Title'
+      })
+      .end((err, res) => {
+        should.exist(err);
+        res.status.should.equal(400);
+        res.type.should.equal('application/json');
+        res.body.status.should.eql('error');
+        should.exist(res.body.message);
+        done();
+      });
+    });
+  });
 });

@@ -36,4 +36,29 @@ router.get(`${BASE_URL}/:id`, async (ctx) => {
   }
 })
 
+router.post(`${BASE_URL}`, async (ctx) => {
+  try {
+    const creation = await queries.addCreation(ctx.request.body);
+    if (creation.length) {
+      ctx.status = 201;
+      ctx.body = {
+        status: 'success',
+        data: creation
+      };
+    } else {
+      ctx.status = 400;
+      ctx.body = {
+        status: 'error',
+        message: 'Something went wrong.'
+      };
+    }
+  } catch (err) {
+    ctx.status = 400;
+    ctx.body = {
+      status: 'error',
+      message: err.message || 'Sorry, an error has occurred.'
+    };
+  }
+})
+
 module.exports = router;

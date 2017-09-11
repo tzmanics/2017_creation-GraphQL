@@ -11,7 +11,14 @@ function getSingleCreation(id) {
   .where({ id: parseInt(id) });
 }
 
+function addCreation(creation) {
+  return knex('creations')
+  .insert(creation)
+  .returning('*');
+}
+
 module.exports = {
   getAllCreations,
-  getSingleCreation
+  getSingleCreation,
+  addCreation
 };
