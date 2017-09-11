@@ -86,4 +86,29 @@ router.put(`${BASE_URL}/:id`, async (ctx) => {
   }
 })
 
+router.delete(`${BASE_URL}/:id`, async (ctx) => {
+  try {
+    const creation = await queries.deleteCreation(ctx.params.id);
+    if (creation.length) {
+      ctx.status = 200;
+      ctx.body = {
+        status: 'success',
+        data: creation
+      };
+    } else {
+      ctx.status = 404;
+      ctx.body = {
+        status: 'error',
+        message: 'That creation does not exist.'
+      };
+    }
+  } catch (err) {
+    ctx.status = 400;
+    ctx.body = {
+      status: 'error',
+      message: err.message || 'Sorry, an error has occurred.'
+    };
+  }
+})
+
 module.exports = router;

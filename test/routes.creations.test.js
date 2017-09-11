@@ -147,4 +147,43 @@ describe('routes : creations', () => {
       });
     });
   });
+
+  describe('DELETE /api/v1/creations/:id', () => {
+    it('should return the creation that was deleted', (done) => {
+      knex('creations')
+      .select('*')
+      .then((creations) => {
+        const creationObject = creations[0];
+        const lengthBeforeDelete = creations.length;
+        chai.request(server)
+        .delete(`/api/v1/creations/${creationObject.id}`)
+        .end((err, res) => {
+          should.not.exist(err);
+          res.status.should.equal(200);
+          res.type.should.equal('application/json');
+          res.body.status.should.eql('success');
+          res.body.data[0].should.include.keys(
+            'id', 'title', 'description', 'materials', 'image', 'category'
+          );
+          knex('creations').select('*')
+          .then((updatedCreations) => {
+            updatedCreations.length.should.eql(lengthBeforeDelete - 1);
+            done();
+          })
+        });
+      });
+    });
+    it('should throw an error if the creation does not exist', (done) => {
+      chai.request(server)
+      .delete('/api/v1/creations/2222222')
+      .end((err, res) => {
+        should.exist(err);
+        res.status.should.equal(404);
+        res.type.should.equal('application/json');
+        res.body.status.should.eql('error');
+        res.body.message.should.eql('That creation does not exist.');
+        done();
+      });
+    });
+  });
 });

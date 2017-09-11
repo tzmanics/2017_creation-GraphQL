@@ -24,9 +24,17 @@ function updateCreation(id, creation) {
   .returning('*');
 }
 
+function deleteCreation(id) {
+  return knex('creations')
+  .del()
+  .where({ id: parseInt(id) })
+  .returning('*');
+}
+
 module.exports = {
   getAllCreations,
   getSingleCreation,
   addCreation,
-  updateCreation
+  updateCreation,
+  deleteCreation
 };
