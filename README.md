@@ -22,7 +22,7 @@ Returns an object containing the `status` and `data` properties.
 
 If `status` is `success`, it will return a status code of `200` and `data` will contains an array of all the creations objects or an empty object if there are no creations.
 
-#### 1.1.3 Response Example 
+#### 1.1.3 Response Example
 ```json
 {
   "status":"success",
@@ -58,11 +58,11 @@ Gets one of the creation items.
 #### 1.2.2 Response
 Returns an object containing the `status` and `data` or `message` properties.
 
-If `status` is `success`, it will resturn a status code of `200` and `data` will contain an array of the creation matching the `id` and its properties.
+If `status` is `success`, it will return a status code of `200` and `data` will contain an array of the creation matching the `id` and its properties.
 
-If there is no `status` is `error`, it will return a status code of `404` and the `message` will contain an error message.
+If there is no creation that matches the requested `id`, `status` is `error`, it will return a status code of `404` and the `message` will contain an error message.
 
-#### 1.1.3 Response Example 
+#### 1.2.3 Response Example
 ```json
 {
   "status":"success",
@@ -83,5 +83,64 @@ If there is no `status` is `error`, it will return a status code of `404` and th
 {
   "status":"error",
   "message":"That creation does not exist."
+}
+```
+### 1.3 POST one creation
+
+| URL    | `/api/v1/creations` |
+|--------|---------------------|
+| Method | `POST`               |
+
+#### 1.3.1 Description
+Posts a new creation item.
+
+#### 1.3.2 Body Arguments
+|Name       |Types | Description                                         |Req'd|
+|-----------|------|-----------------------------------------------------|-----|
+|title      |string|The title of the creation.                           |yes  |
+|description|string|The description of the creation.                     |yes  |
+|materials  |string|Materials used to create the creation.               |yes  |
+|image      |string|A link to an image of the creation.                  |yes  |
+|category   |string|The category of the creation, e.g. wood, clay, web   |yes  |
+
+#### 1.3.3 Body
+```json
+{
+  "title":"Pangolin Print",
+  "description":"A hand-carved relief print plate of a pangolin",
+  "materials":"birch plywood, chisels, toner print, mineral spirits (for transfer)",
+  "image":"http://bit.ly/2ftvayn",
+  "category":"craft"
+}
+```
+
+#### 1.3.4 Response
+Returns an object containing the `status` and `data` or `message` properties.
+
+If `status` is `success`, it will return a status code of `201` and `data` will be an array containing an object of the creation that was added.
+
+If the body or payload is malformed `status` is `error` and it will return a status code of `400` and the `message` will contain an error message.
+
+#### 1.3.5 Response Example
+```json
+{
+  "status":"success",
+  "data":[
+    {
+      "id":5,
+      "title":"Pangolin Print",
+      "description":"A hand-carved relief print plate of a pangolin",
+      "materials":"birch plywood, chisels, toner print, mineral spirits (for transfer)",
+      "image":"http://bit.ly/2ftvayn",
+      "category":"craft"
+    }
+  ]
+}
+```
+
+```json
+{
+  "status":"error",
+  "message":"Something went wrong."
 }
 ```
